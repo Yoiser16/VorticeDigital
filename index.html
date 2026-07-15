@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vórtice Digital | Soluciones Tecnológicas & Desarrollo de Software</title>
+    <meta name="description"
+        content="En Vórtice Digital creamos software a la medida, automatizaciones, arquitectura escalable y dashboards de datos para impulsar tu empresa al siguiente nivel.">
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Header & Navigation -->
+    <header class="main-header">
+        <div class="container nav-container">
+            <a href="#" class="logo-area" id="nav-logo-link">
+                <img src="logo.png" alt="Vórtice Digital Logo" class="brand-logo">
+                <span class="brand-name">Vórtice <span class="text-gradient">Digital</span></span>
+            </a>
+            <button class="mobile-menu-btn" aria-label="Abrir menú" id="mobile-menu-toggle">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <nav class="nav-menu" id="main-nav">
+                <a href="#inicio" class="nav-link active">Inicio</a>
+                <a href="#servicios" class="nav-link">Servicios</a>
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+                <a href="#contacto" class="nav-link btn-nav" id="btn-nav-contact">Contáctanos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="inicio" class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <span class="badge fade-in-up">Innovación & Soluciones Digitales</span>
+                    <h1 class="hero-title fade-in-up delay-1">Transformamos ideas complejas en <span
+                            class="text-gradient">sistemas eficientes</span></h1>
+                    <p class="hero-subtitle fade-in-up delay-2">Diseñamos y desarrollamos software de alta gama,
+                        automatizamos tus procesos y convertimos tus datos en decisiones estratégicas.</p>
+                    <div class="hero-actions fade-in-up delay-3">
+                        <a href="#servicios" class="btn btn-primary" id="hero-btn-services">Nuestros Servicios</a>
+                        <a href="#contacto" class="btn btn-secondary" id="hero-btn-contact">Hablemos de tu Proyecto</a>
+                    </div>
+                </div>
+                <div class="hero-visual fade-in-up delay-2">
+                    <div class="vortex-visual-container">
+                        <div class="visual-circle circle-1"></div>
+                        <div class="visual-circle circle-2"></div>
+                        <div class="visual-circle circle-3"></div>
+                        <div class="visual-core">
+                            <img src="logo.png" alt="Branding Vórtice Digital" class="visual-logo-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="servicios" class="services-section section-padding">
+            <div class="container">
+                <div class="section-header text-center scroll-reveal">
+                    <span class="section-tagline">Lo que hacemos</span>
+                    <h2 class="section-title">Soluciones que impulsan tu crecimiento</h2>
+                    <p class="section-desc">Desarrollamos tecnología robusta y elegante diseñada específicamente para
+                        optimizar el rendimiento y escalabilidad de tu negocio.</p>
+                </div>
+
+                <div class="services-grid">
+                    <!-- Service 1 -->
+                    <div class="service-card scroll-reveal">
+                        <div class="card-glow"></div>
+                        <div class="service-icon">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="service-title">Desarrollo de Software a la Medida</h3>
+                        <p class="service-text">Creamos sistemas personalizados que se adaptan a las necesidades exactas
+                            de tu empresa o negocio, optimizando procesos y facilitando el trabajo diario.</p>
+                        <a href="#contacto" class="card-link" data-service="Desarrollo a la Medida">Saber más <i
+                                class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="service-card scroll-reveal">
+                        <div class="card-glow"></div>
+                        <div class="service-icon">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="service-title">Aplicaciones Web y de Escritorio</h3>
+                        <p class="service-text">Desarrollamos aplicaciones modernas, rápidas y seguras para computadores
+                            y navegadores, diseñadas para mejorar la productividad de tu organización.</p>
+                        <a href="#contacto" class="card-link" data-service="Aplicaciones Web/Escritorio">Saber más <i
+                                class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="service-card scroll-reveal">
+                        <div class="card-glow"></div>
+                        <div class="service-icon">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <h3 class="service-title">Arquitectura de Software</h3>
+                        <p class="service-text">Diseñamos la estructura tecnológica de tus proyectos para que sean
+                            seguros, escalables, fáciles de mantener y preparados para crecer contigo.</p>
+                        <a href="#contacto" class="card-link" data-service="Arquitectura de Software">Saber más <i
+                                class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="service-card scroll-reveal">
+                        <div class="card-glow"></div>
+                        <div class="service-icon">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                        </div>
+                        <h3 class="service-title">Automatización e Integración</h3>
+                        <p class="service-text">Automatizamos tareas repetitivas y conectamos diferentes plataformas y
+                            servicios para ahorrar tiempo, reducir errores y aumentar la eficiencia.</p>
+                        <a href="#contacto" class="card-link" data-service="Automatización e Integración">Saber más <i
+                                class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Service 5 -->
+                    <div class="service-card scroll-reveal">
+                        <div class="card-glow"></div>
+                        <div class="service-icon">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <h3 class="service-title">Dashboard y Reportes</h3>
+                        <p class="service-text">Convertimos tus datos en información clara mediante paneles de control e
+                            informes que facilitan el seguimiento de indicadores y la toma de decisiones.</p>
+                        <a href="#contacto" class="card-link" data-service="Dashboard y Reportes">Saber más <i
+                                class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="nosotros" class="about-section section-padding">
+            <div class="container about-container">
+                <div class="about-visual scroll-reveal">
+                    <div class="about-card-stack">
+                        <div class="stack-card card-back"></div>
+                        <div class="stack-card card-middle"></div>
+                        <div class="stack-card card-front">
+                            <div class="front-header">
+                                <span class="bullet"></span>
+                                <span class="bullet"></span>
+                                <span class="bullet"></span>
+                            </div>
+                            <div class="front-body">
+                                <p class="code-line"><span class="code-keyword">const</span> <span
+                                        class="code-variable">vortice</span> = <span class="code-keyword">new</span>
+                                    <span class="code-class">VorticeDigital</span>();</p>
+                                <p class="code-line"><span class="code-variable">vortice</span>.<span
+                                        class="code-method">desarrollar</span>({</p>
+                                <p class="code-line-indented"><span class="code-property">calidad</span>: <span
+                                        class="code-string">'excelente'</span>,</p>
+                                <p class="code-line-indented"><span class="code-property">seguridad</span>: <span
+                                        class="code-keyword">true</span>,</p>
+                                <p class="code-line-indented"><span class="code-property">escalabilidad</span>: <span
+                                        class="code-string">'ilimitada'</span></p>
+                                <p class="code-line">});</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-content scroll-reveal">
+                    <span class="section-tagline">Sobre Vórtice Digital</span>
+                    <h2 class="section-title">El punto de convergencia entre tus necesidades y el software de élite</h2>
+                    <p class="section-desc">En <strong>Vórtice Digital</strong> entendemos que el software no debe ser
+                        genérico. Nos apasiona sumergirnos en la estructura de tu negocio para canalizar la tecnología
+                        en soluciones precisas, seguras y de alto impacto visual y funcional.</p>
+
+                    <div class="pillars-list">
+                        <div class="pillars-list-item">
+                            <div class="pillar-bullet"><i class="fa-solid fa-check"></i></div>
+                            <div>
+                                <h4>Código Artesanal & Seguro</h4>
+                                <p>Cada línea de código es escrita con estándares premium de seguridad y mantenibilidad.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="pillars-list-item">
+                            <div class="pillar-bullet"><i class="fa-solid fa-check"></i></div>
+                            <div>
+                                <h4>Metodología Centrada en el Cliente</h4>
+                                <p>Te mantenemos involucrado con entregas continuas y tableros interactivos
+                                    transparentes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contacto" class="contact-section section-padding">
+            <div class="container contact-container">
+                <div class="contact-info scroll-reveal">
+                    <span class="section-tagline">Contacto</span>
+                    <h2 class="section-title">Creemos algo extraordinario juntos</h2>
+                    <p class="section-desc">¿Tienes un proyecto en mente o quieres automatizar los procesos de tu
+                        negocio? Escríbenos y nuestro equipo de ingenieros diseñará la solución ideal.</p>
+
+                    <div class="info-items">
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <span>Correo electrónico</span>
+                                <a href="mailto:stivenagualimpia@gmail.com">stivenagualimpia@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <span>Ubicación</span>
+                                <p>Medellín, Colombia (Servicio Global)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-container scroll-reveal">
+                    <form class="contact-form" id="project-contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="form-name">Nombre Completo</label>
+                                <input type="text" id="form-name" name="name" required placeholder="Tu nombre">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="form-email">Correo Electrónico</label>
+                                <input type="email" id="form-email" name="email" required placeholder="tu@empresa.com">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="form-service">Servicio de Interés</label>
+                                <select id="form-service" name="service" required>
+                                    <option value="" disabled selected>Selecciona un servicio</option>
+                                    <option value="Desarrollo a la Medida">Desarrollo de Software a la Medida</option>
+                                    <option value="Aplicaciones Web/Escritorio">Aplicaciones Web y de Escritorio
+                                    </option>
+                                    <option value="Arquitectura de Software">Arquitectura de Software</option>
+                                    <option value="Automatización e Integración">Automatización e Integración de
+                                        Procesos</option>
+                                    <option value="Dashboard y Reportes">Dashboard y Reportes</option>
+                                    <option value="Otro">Otro Proyecto Tecnológico</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="form-message">Cuéntanos sobre tu proyecto</label>
+                                <textarea id="form-message" name="message" rows="4" required
+                                    placeholder="Detalla brevemente lo que necesitas..."></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" id="form-submit-btn">
+                            Enviar Mensaje <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                        <div class="form-feedback" id="form-message-feedback"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="#" class="logo-area">
+                    <img src="logo.png" alt="Vórtice Digital Logo" class="brand-logo">
+                    <span class="brand-name">Vórtice <span class="text-gradient">Digital</span></span>
+                </a>
+                <p>Canalizando tecnología en soluciones de alto impacto.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Enlaces</h4>
+                <a href="#inicio">Inicio</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#nosotros">Nosotros</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <div class="footer-socials">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Vórtice Digital. Todos los derechos reservados. Diseñado con excelencia.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+
+</html>
