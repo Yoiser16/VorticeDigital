@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 7. Contact Form Handling (Web3Forms Real Integration)
     // Para recibir correos reales, ingresa tu clave de Web3Forms aquí.
     // Obtén una clave gratis al instante en: https://web3forms.com/
-    const ACCESS_KEY = "1f3b062b-ffc0-4494-a0c0-36a26baf0866";
+    const ACCESS_KEY = "673bf15c-1b1a-46c8-9656-da770ea6c289";
 
     const contactForm = document.getElementById('project-contact-form');
     const formFeedback = document.getElementById('form-message-feedback');
