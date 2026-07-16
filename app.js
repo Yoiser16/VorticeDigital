@@ -116,6 +116,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('project-contact-form');
     const formFeedback = document.getElementById('form-message-feedback');
     const submitBtn = document.getElementById('form-submit-btn');
+    const phoneInputField = document.querySelector("#form-phone");
+
+    // Inicializar intl-tel-input con banderas globales y autocanje de prefijos
+    let iti;
+    if (phoneInputField) {
+        iti = window.intlTelInput(phoneInputField, {
+            initialCountry: "co",
+            preferredCountries: ["co", "us", "es", "mx"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+        });
+    }
 
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
@@ -127,6 +138,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Preparar los datos para el envío
             const formData = new FormData(contactForm);
+
+            // Reemplazar con el número internacional completo formateado
+            if (iti) {
+                formData.set("phone", iti.getNumber());
+            }
 
             // Agregar las claves requeridas por Web3Forms
             formData.append("access_key", ACCESS_KEY);
