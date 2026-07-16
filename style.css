@@ -822,6 +822,22 @@ a {
     color: var(--text-primary);
 }
 
+.phone-input-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.phone-input-wrapper select {
+    width: 110px;
+    flex-shrink: 0;
+    text-align: center;
+    padding: 12px 8px;
+}
+
+.phone-input-wrapper input {
+    flex-grow: 1;
+}
+
 /* Footer */
 .main-footer {
     border-top: 1px solid var(--border-color);
