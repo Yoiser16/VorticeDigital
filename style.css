@@ -1094,6 +1094,19 @@ a {
     object-position: bottom;
 }
 
+/* Credit Link Styling */
+.credit-link {
+    color: var(--text-primary);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: var(--transition-fast);
+}
+
+.credit-link:hover {
+    color: var(--text-secondary);
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
     .hero-container {
