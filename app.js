@@ -620,8 +620,10 @@ Por favor, contáctenme para agendar la llamada inicial y definir detalles del d
             removeTypingIndicator();
 
             if (response.ok && data.response) {
-                // Convert newlines to html line breaks
-                const formattedResponse = data.response.replace(/\n/g, '<br>');
+                // Convertir negritas markdown (**texto**) a etiquetas HTML strong
+                let formattedResponse = data.response.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                // Convertir saltos de línea a <br>
+                formattedResponse = formattedResponse.replace(/\n/g, '<br>');
                 appendMessage('bot', formattedResponse);
             } else {
                 appendMessage('bot', 'Lo siento, tuve un problema al conectarme con mi motor de lenguaje. Por favor, vuelve a intentarlo más tarde o escríbenos directamente a WhatsApp.');
