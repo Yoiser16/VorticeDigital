@@ -51,6 +51,7 @@
     <main>
         <!-- Hero Section -->
         <section id="inicio" class="hero-section">
+            <canvas id="hero-canvas"></canvas>
             <div class="container hero-container">
                 <div class="hero-content">
                     <span class="badge fade-in-up">Innovación & Soluciones Digitales</span>
@@ -239,6 +240,150 @@
             </div>
         </section>
 
+        <!-- Budget Estimator Section -->
+        <section id="cotizador" class="estimator-section section-padding">
+            <div class="container">
+                <div class="section-header text-center scroll-reveal">
+                    <span class="section-tagline">Presupuesto Online</span>
+                    <h2 class="section-title">Calcula el valor de tu proyecto</h2>
+                    <p class="section-desc">Selecciona los servicios que requiere tu negocio para obtener una estimación en tiempo real. Respaldado por nuestro equipo de ingenieros.</p>
+                </div>
+
+                <div class="estimator-container scroll-reveal">
+                    <div class="estimator-card">
+                        <!-- Currency Toggle -->
+                        <div class="currency-toggle-area">
+                            <span>Visualizar precios en:</span>
+                            <div class="currency-switch">
+                                <button type="button" class="currency-btn active" id="btn-currency-cop">COP ($)</button>
+                                <button type="button" class="currency-btn" id="btn-currency-usd">USD ($)</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 1: Base Project Type -->
+                        <div class="estimator-group">
+                            <h3>1. Tipo de Proyecto Principal (Selecciona uno)</h3>
+                            <div class="estimator-options grid-3">
+                                <label class="option-card radio-option active">
+                                    <input type="radio" name="project_base" value="web_basic" data-cost-cop="1500000" data-cost-usd="375" checked>
+                                    <div class="option-content">
+                                        <div class="option-icon"><i class="fa-solid fa-code"></i></div>
+                                        <h4>Web Básica</h4>
+                                        <p class="option-price-text">$1.500.000 COP</p>
+                                        <span class="option-desc-small">Sitio informativo para tu negocio de alta conversión.</span>
+                                    </div>
+                                </label>
+
+                                <label class="option-card radio-option">
+                                    <input type="radio" name="project_base" value="web_business" data-cost-cop="3000000" data-cost-usd="750">
+                                    <div class="option-content">
+                                        <div class="option-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                                        <h4>Web Empresarial</h4>
+                                        <p class="option-price-text">$3.000.000 COP</p>
+                                        <span class="option-desc-small">Portal corporativo dinámico con catálogos y gestión interactiva.</span>
+                                    </div>
+                                </label>
+
+                                <label class="option-card radio-option">
+                                    <input type="radio" name="project_base" value="system_custom" data-cost-cop="5000000" data-cost-usd="1250">
+                                    <div class="option-content">
+                                        <div class="option-icon"><i class="fa-solid fa-database"></i></div>
+                                        <h4>Sistema a Medida</h4>
+                                        <p class="option-price-text">$5.000.000 COP</p>
+                                        <span class="option-desc-small">Software especializado con base de datos e interfaces robustas.</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Infrastructure & Servers -->
+                        <div class="estimator-group">
+                            <h3>2. Infraestructura y Redes (Opcional)</h3>
+                            <div class="estimator-options grid-3">
+                                <label class="option-card checkbox-option">
+                                    <input type="checkbox" name="infra_addons" value="server_setup" data-cost-cop="3000000" data-cost-usd="750">
+                                    <div class="option-content">
+                                        <div class="option-icon"><i class="fa-solid fa-server"></i></div>
+                                        <h4>Implementación Servidor</h4>
+                                        <p class="option-price-text">+$3.000.000 COP</p>
+                                        <span class="option-desc-small">Configuración de servidor empresarial dedicado (Linux o Windows).</span>
+                                    </div>
+                                </label>
+
+                                <label class="option-card checkbox-option">
+                                    <input type="checkbox" name="infra_addons" value="network_setup" data-cost-cop="1200000" data-cost-usd="300">
+                                    <div class="option-content">
+                                        <div class="option-icon"><i class="fa-solid fa-sitemap"></i></div>
+                                        <h4>Configuración de Red</h4>
+                                        <p class="option-price-text">+$1.200.000 COP</p>
+                                        <span class="option-desc-small">Instalación y configuración de red local (hasta 10 equipos).</span>
+                                    </div>
+                                </label>
+
+                                <label class="option-card checkbox-option">
+                                    <input type="checkbox" name="infra_addons" value="server_admin" data-cost-cop="2000000" data-cost-usd="500">
+                                    <div class="option-content">
+                                        <div class="option-icon"><i class="fa-solid fa-gears"></i></div>
+                                        <h4>Soporte Servidor (Mensual)</h4>
+                                        <p class="option-price-text">+$2.000.000 COP</p>
+                                        <span class="option-desc-small">Administración y monitoreo mensual de la infraestructura del servidor.</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Security & Extra Modules -->
+                        <div class="estimator-group">
+                            <h3>3. Seguridad y Módulos Extra (Opcional)</h3>
+                            <div class="estimator-options grid-3">
+                                <label class="option-card checkbox-option">
+                                    <input type="checkbox" name="security_addons" value="sec_basic" data-cost-cop="1800000" data-cost-usd="450">
+                                    <div class="option-content">
+                                        <div class="option-icon"><i class="fa-solid fa-lock"></i></div>
+                                        <h4>Seguridad Básica</h4>
+                                        <p class="option-price-text">+$1.800.000 COP</p>
+                                        <span class="option-desc-small">Políticas de seguridad avanzadas y protección perimetral (Firewall).</span>
+                                    </div>
+                                </label>
+
+                                <label class="option-card checkbox-option">
+                                    <input type="checkbox" name="security_addons" value="backup_system" data-cost-cop="1000000" data-cost-usd="250">
+                                    <div class="option-content">
+                                        <div class="option-icon"><i class="fa-solid fa-floppy-disk"></i></div>
+                                        <h4>Copias de Seguridad</h4>
+                                        <p class="option-price-text">+$1.000.000 COP</p>
+                                        <span class="option-desc-small">Respaldos (Backups) automatizados redundantes en servidores en la nube.</span>
+                                    </div>
+                                </label>
+
+                                <label class="option-card checkbox-option">
+                                    <input type="checkbox" name="security_addons" value="e_billing" data-cost-cop="1200000" data-cost-usd="300">
+                                    <div class="option-content">
+                                        <div class="option-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                                        <h4>Facturación Electrónica</h4>
+                                        <p class="option-price-text">+$1.200.000 COP</p>
+                                        <span class="option-desc-small">Módulo de facturación electrónica integrado para reportes legales.</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Result Section -->
+                        <div class="estimator-result-card">
+                            <div class="result-info">
+                                <h3>Presupuesto Estimado Rango</h3>
+                                <div class="result-price" id="estimated-range">$1.350.000 - $1.650.000 COP</div>
+                                <p class="result-notes">Esta cifra es un rango estimado para nuestro equipo y puede variar dependiendo de especificaciones técnicas.</p>
+                            </div>
+                            <div class="result-action">
+                                <button type="button" class="btn btn-primary" id="btn-request-quote">Solicitar esta Propuesta <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- About Us Section -->
         <section id="nosotros" class="about-section section-padding">
             <div class="container about-container">
@@ -292,6 +437,124 @@
                                 <h4>Metodología Centrada en el Cliente</h4>
                                 <p>Te mantenemos involucrado con entregas continuas y tableros interactivos
                                     transparentes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section id="proceso" class="process-section section-padding">
+            <div class="container">
+                <div class="section-header text-center scroll-reveal">
+                    <span class="section-tagline">Metodología</span>
+                    <h2 class="section-title">Cómo damos vida a tus ideas</h2>
+                    <p class="section-desc">Seguimos un proceso estructurado e iterativo para asegurar que cada línea de código aporte valor real a tu negocio.</p>
+                </div>
+
+                <div class="process-timeline">
+                    <!-- Step 1 -->
+                    <div class="timeline-item scroll-reveal">
+                        <div class="timeline-number">01</div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                            <h3>1. Descubrimiento & Estrategia</h3>
+                            <p>Nos reunimos para entender las metas de tu negocio, analizar la viabilidad técnica y estructurar los requisitos detallados del proyecto en un plan de acción.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="timeline-item scroll-reveal">
+                        <div class="timeline-number">02</div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+                            <h3>2. Diseño & Prototipado</h3>
+                            <p>Creamos las interfaces de usuario y maquetas funcionales interactivas (UX/UI) para que puedas visualizar y aprobar la experiencia de usuario antes de programar.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="timeline-item scroll-reveal">
+                        <div class="timeline-number">03</div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                            <h3>3. Desarrollo & QA</h3>
+                            <p>Nuestro equipo de ingenieros programa la solución siguiendo estándares modernos. Realizamos rigurosas pruebas de seguridad, velocidad y funcionamiento.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="timeline-item scroll-reveal">
+                        <div class="timeline-number">04</div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon"><i class="fa-solid fa-circle-check"></i></div>
+                            <h3>4. Lanzamiento & Soporte</h3>
+                            <p>Desplegamos el sistema en servidores corporativos seguros y nos aseguramos de que todo marche perfecto. Brindamos soporte continuo y mantenimiento post-lanzamiento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq-section section-padding">
+            <div class="container">
+                <div class="section-header text-center scroll-reveal">
+                    <span class="section-tagline">Preguntas Frecuentes</span>
+                    <h2 class="section-title">Resolviendo tus dudas comunes</h2>
+                    <p class="section-desc">Aquí encontrarás respuestas a las preguntas más frecuentes sobre nuestra metodología, soporte y desarrollo de software.</p>
+                </div>
+
+                <div class="faq-container scroll-reveal">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span>¿Cuánto tiempo toma desarrollar un proyecto?</span>
+                            <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>El tiempo de desarrollo varía según la complejidad del proyecto. Una página web básica o Landing Page suele requerir de 1 a 2 semanas, mientras que un portal empresarial dinámico toma de 3 a 5 semanas, y un sistema de información o software a medida complejo puede requerir de 6 a 10 semanas de trabajo.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span>¿El código desarrollado pasa a ser de mi propiedad?</span>
+                            <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Sí, absolutamente. Una vez finalizado el proyecto y liquidado el pago total de la cotización, te transferimos el 100% de los derechos de propiedad intelectual, el código fuente, la base de datos y todas las credenciales de administración del servidor y plataformas de terceros.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span>¿Ofrecen soporte y mantenimiento post-lanzamiento?</span>
+                            <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Sí, por supuesto. Todos nuestros proyectos incluyen un periodo de garantía de 30 días para resolver cualquier error imprevisto de forma gratuita. Posteriormente, ofrecemos planes mensuales de administración de servidores, copias de seguridad automáticas, soporte técnico y actualizaciones periódicas de software.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span>¿Cómo se maneja el esquema de pagos del proyecto?</span>
+                            <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Normalmente trabajamos con un esquema estándar de dos partes: un anticipo del 50% para dar inicio formal al proyecto (planificación, diseño y desarrollo inicial) y el 50% restante contra entrega final, conformidad del cliente y pruebas en producción satisfactorias.</p>
                             </div>
                         </div>
                     </div>

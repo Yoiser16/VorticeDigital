@@ -194,4 +194,330 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
     }
+
+    // 8. Interactive Budget Estimator Lógica (COP/USD y Suma Total)
+    let currentCurrency = 'COP';
+
+    function updateCurrencyDisplay() {
+        const inputs = document.querySelectorAll('#cotizador input[data-cost-cop]');
+        inputs.forEach(input => {
+            const cardContent = input.nextElementSibling;
+            if (cardContent) {
+                const priceTextEl = cardContent.querySelector('.option-price-text');
+                if (priceTextEl) {
+                    const isCheckbox = input.type === 'checkbox';
+                    const prefix = isCheckbox ? '+' : '';
+                    if (currentCurrency === 'COP') {
+                        const val = parseInt(input.getAttribute('data-cost-cop')).toLocaleString('es-CO');
+                        priceTextEl.textContent = `${prefix}$${val} COP`;
+                    } else {
+                        const val = parseInt(input.getAttribute('data-cost-usd')).toLocaleString('en-US');
+                        priceTextEl.textContent = `${prefix}$${val} USD`;
+                    }
+                }
+            }
+        });
+    }
+
+    function calculateTotal() {
+        let total = 0;
+        const checkedInputs = document.querySelectorAll('#cotizador input:checked');
+        
+        checkedInputs.forEach(input => {
+            if (currentCurrency === 'COP') {
+                total += parseInt(input.getAttribute('data-cost-cop'));
+            } else {
+                total += parseInt(input.getAttribute('data-cost-usd'));
+            }
+        });
+
+        // Calcular rango (-10% y +10%)
+        const minVal = Math.round(total * 0.9);
+        const maxVal = Math.round(total * 1.1);
+
+        const resultPriceEl = document.getElementById('estimated-range');
+        if (resultPriceEl) {
+            if (currentCurrency === 'COP') {
+                const minFormatted = minVal.toLocaleString('es-CO');
+                const maxFormatted = maxVal.toLocaleString('es-CO');
+                resultPriceEl.textContent = `$${minFormatted} - $${maxFormatted} COP`;
+            } else {
+                const minFormatted = minVal.toLocaleString('en-US');
+                const maxFormatted = maxVal.toLocaleString('en-US');
+                resultPriceEl.textContent = `$${minFormatted} - $${maxFormatted} USD`;
+            }
+        }
+    }
+
+    // Manejo de eventos de cambio en las opciones
+    const allInputs = document.querySelectorAll('#cotizador input');
+    allInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            if (input.type === 'radio') {
+                const radios = document.querySelectorAll(`#cotizador input[name="${input.name}"]`);
+                radios.forEach(r => {
+                    r.closest('.option-card').classList.remove('active');
+                });
+                if (input.checked) {
+                    input.closest('.option-card').classList.add('active');
+                }
+            } else if (input.type === 'checkbox') {
+                if (input.checked) {
+                    input.closest('.option-card').classList.add('active');
+                } else {
+                    input.closest('.option-card').classList.remove('active');
+                }
+            }
+            calculateTotal();
+        });
+    });
+
+    // Manejo del switch selector de divisa
+    const btnCOP = document.getElementById('btn-currency-cop');
+    const btnUSD = document.getElementById('btn-currency-usd');
+
+    if (btnCOP && btnUSD) {
+        btnCOP.addEventListener('click', () => {
+            currentCurrency = 'COP';
+            btnCOP.classList.add('active');
+            btnUSD.classList.remove('active');
+            updateCurrencyDisplay();
+            calculateTotal();
+        });
+
+        btnUSD.addEventListener('click', () => {
+            currentCurrency = 'USD';
+            btnUSD.classList.add('active');
+            btnCOP.classList.remove('active');
+            updateCurrencyDisplay();
+            calculateTotal();
+        });
+    }
+
+    // Botón de solicitar propuesta formal y autollenado
+    const btnRequestQuote = document.getElementById('btn-request-quote');
+    const textareaMessage = document.getElementById('form-message');
+    const contactSection = document.getElementById('contacto');
+    const formNameInput = document.getElementById('form-name');
+
+    if (btnRequestQuote) {
+        btnRequestQuote.addEventListener('click', () => {
+            const baseProject = document.querySelector('#cotizador input[name="project_base"]:checked');
+            const baseProjectName = baseProject ? baseProject.closest('.option-card').querySelector('h4').textContent : '';
+            
+            const selectedAddons = [];
+            const checkedAddons = document.querySelectorAll('#cotizador input[type="checkbox"]:checked');
+            checkedAddons.forEach(chk => {
+                selectedAddons.push(chk.closest('.option-card').querySelector('h4').textContent);
+            });
+
+            const rangeText = document.getElementById('estimated-range').textContent;
+
+            // Autocompletar la selección en el dropdown del formulario
+            if (selectService) {
+                if (baseProjectName.includes('Básica')) {
+                    selectService.value = 'Desarrollo a la Medida';
+                } else if (baseProjectName.includes('Empresarial')) {
+                    selectService.value = 'Aplicaciones Web/Escritorio';
+                } else {
+                    selectService.value = 'Otro';
+                }
+            }
+
+            // Autocompletar el campo de mensaje
+            if (textareaMessage) {
+                let addonsList = selectedAddons.length > 0 ? selectedAddons.join(', ') : 'Ninguno';
+                textareaMessage.value = `Hola Vórtice Digital, estoy interesado en iniciar un proyecto.
+Calculé mi presupuesto estimado con su cotizador interactivo:
+- Proyecto Base: ${baseProjectName}
+- Módulos adicionales seleccionados: ${addonsList}
+- Rango de presupuesto estimado: ${rangeText}
+
+Por favor, contáctenme para agendar la llamada inicial y definir detalles del desarrollo.`;
+            }
+
+            // Desplazamiento suave al formulario y foco en el input del nombre
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => {
+                    if (formNameInput) formNameInput.focus();
+                }, 800);
+            }
+        });
+    }
+
+    // 9. FAQ Accordion Lógica
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.closest('.faq-item');
+            const faqAnswer = faqItem.querySelector('.faq-answer');
+            const isActive = faqItem.classList.contains('active');
+
+            // Cerrar otros acordeones abiertos primero (comportamiento clásico)
+            const allItems = document.querySelectorAll('.faq-item');
+            allItems.forEach(item => {
+                if (item !== faqItem && item.classList.contains('active')) {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-answer').style.maxHeight = '0';
+                    item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Alternar el estado del acordeón seleccionado
+            if (isActive) {
+                faqItem.classList.remove('active');
+                faqAnswer.style.maxHeight = '0';
+                question.setAttribute('aria-expanded', 'false');
+            } else {
+                faqItem.classList.add('active');
+                faqAnswer.style.maxHeight = faqAnswer.scrollHeight + 'px';
+                question.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+
+    // 10. Animación de "Vórtice" Interactivo en Canvas (Hero Background)
+    const canvas = document.getElementById('hero-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let center = { x: 0, y: 0 };
+        const particles = [];
+        const particleCount = 85; // Cantidad óptima para rendimiento móvil y desktop
+        let mouse = { x: null, y: null, radius: 140 };
+
+        function resize() {
+            const parent = canvas.closest('.hero-section');
+            if (parent) {
+                width = canvas.width = parent.offsetWidth;
+                height = canvas.height = parent.offsetHeight;
+                
+                // Centrar el vórtice sobre el elemento visual en desktop, o en el centro en móviles
+                if (window.innerWidth > 1024) {
+                    center.x = width * 0.72;
+                    center.y = height * 0.52;
+                } else {
+                    center.x = width * 0.5;
+                    center.y = height * 0.72;
+                }
+            }
+        }
+        
+        resize();
+        window.addEventListener('resize', resize);
+
+        // Interactividad con el mouse
+        const heroSection = canvas.closest('.hero-section');
+        if (heroSection) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = heroSection.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            });
+
+            heroSection.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+                // Distribuir el radio inicial aleatoriamente para evitar que todos empiecen en el mismo punto
+                this.radius = Math.random() * (Math.max(width, height) * 0.4) + 10;
+            }
+
+            reset() {
+                this.angle = Math.random() * Math.PI * 2;
+                this.radius = Math.random() * (Math.max(width, height) * 0.3) + 20;
+                this.speed = (Math.random() * 0.002 + 0.0008); // Velocidad orbital
+                this.spiralSpeed = (Math.random() * 0.15 - 0.05); // Espiral lento hacia afuera/adentro
+                this.size = Math.random() * 2 + 0.6;
+                this.opacity = Math.random() * 0.45 + 0.15;
+                this.color = `rgba(255, 255, 255, ${this.opacity})`;
+            }
+
+            update() {
+                this.angle += this.speed;
+                this.radius += this.spiralSpeed;
+
+                // Resetear si se alejan demasiado o colapsan en el centro
+                if (this.radius < 15 || this.radius > Math.max(width, height) * 0.5) {
+                    this.reset();
+                    this.radius = Math.random() * 40 + 15;
+                }
+
+                let targetX = center.x + Math.cos(this.angle) * this.radius;
+                let targetY = center.y + Math.sin(this.angle) * this.radius;
+
+                // Reacción al ratón (empuje sutil)
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = targetX - mouse.x;
+                    const dy = targetY - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius) {
+                        const force = (mouse.radius - dist) / mouse.radius;
+                        targetX += (dx / dist) * force * 25;
+                        targetY += (dy / dist) * force * 25;
+                    }
+                }
+
+                this.x = targetX;
+                this.y = targetY;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        // Inicializar partículas
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // Conexiones de constelación entre partículas cercanas
+        function drawConnections() {
+            const maxDistance = 75;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < maxDistance) {
+                        const alpha = (1 - dist / maxDistance) * 0.10;
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            drawConnections();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    }
+
+    // Inicializar cálculo inicial
+    calculateTotal();
 });
