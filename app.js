@@ -518,6 +518,144 @@ Por favor, contáctenme para agendar la llamada inicial y definir detalles del d
         animate();
     }
 
+    // 11. AI Agent Client-side Interface Logic (Vorti Chat Window)
+    const chatToggleBtn = document.getElementById('chat-toggle-btn');
+    const chatCloseBtn = document.getElementById('chat-close-btn');
+    const chatWindow = document.getElementById('chat-window');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+    const suggestionBtns = document.querySelectorAll('.suggestion-btn');
+    
+    let chatHistory = [];
+
+    // Toggle Chat Window
+    if (chatToggleBtn && chatWindow) {
+        chatToggleBtn.addEventListener('click', () => {
+            chatWindow.classList.toggle('open');
+            if (chatWindow.classList.contains('open')) {
+                scrollToBottom();
+            }
+        });
+    }
+
+    if (chatCloseBtn && chatWindow) {
+        chatCloseBtn.addEventListener('click', () => {
+            chatWindow.classList.remove('open');
+        });
+    }
+
+    // Scroll chat area to bottom
+    function scrollToBottom() {
+        if (chatMessages) {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    }
+
+    // Add Message to DOM
+    function appendMessage(sender, text) {
+        if (!chatMessages) return;
+
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender === 'user' ? 'outgoing' : 'incoming'}`;
+        
+        const textDiv = document.createElement('div');
+        textDiv.className = 'message-text';
+        textDiv.innerHTML = text;
+
+        messageDiv.appendChild(textDiv);
+        chatMessages.appendChild(messageDiv);
+        scrollToBottom();
+
+        // Save locally to session history
+        chatHistory.push({ sender: sender, text: text });
+    }
+
+    // Show/Remove Typing Indicator
+    let typingIndicatorEl = null;
+    function showTypingIndicator() {
+        if (!chatMessages) return;
+        if (typingIndicatorEl) return;
+
+        typingIndicatorEl = document.createElement('div');
+        typingIndicatorEl.className = 'message incoming typing-indicator-container';
+        typingIndicatorEl.innerHTML = `
+            <div class="message-text typing-indicator">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+            </div>
+        `;
+        chatMessages.appendChild(typingIndicatorEl);
+        scrollToBottom();
+    }
+
+    function removeTypingIndicator() {
+        if (typingIndicatorEl && chatMessages) {
+            chatMessages.removeChild(typingIndicatorEl);
+            typingIndicatorEl = null;
+        }
+    }
+
+    // Send Message to API
+    async function sendMessage(text) {
+        if (!text.trim()) return;
+
+        appendMessage('user', text);
+        showTypingIndicator();
+
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: text,
+                    history: chatHistory.slice(0, -1)
+                })
+            });
+
+            const data = await response.json();
+            removeTypingIndicator();
+
+            if (response.ok && data.response) {
+                // Convert newlines to html line breaks
+                const formattedResponse = data.response.replace(/\n/g, '<br>');
+                appendMessage('bot', formattedResponse);
+            } else {
+                appendMessage('bot', 'Lo siento, tuve un problema al conectarme con mi motor de lenguaje. Por favor, vuelve a intentarlo más tarde o escríbenos directamente a WhatsApp.');
+            }
+        } catch (error) {
+            console.error('Error al comunicarse con Vorti backend:', error);
+            removeTypingIndicator();
+            appendMessage('bot', 'No pude conectar con el servidor de inteligencia artificial. Revisa tu conexión a internet o intenta más tarde.');
+        }
+    }
+
+    // Form Submit
+    if (chatForm && chatInput) {
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = chatInput.value;
+            chatInput.value = '';
+            sendMessage(text);
+        });
+    }
+
+    // Quick suggestions clicks
+    suggestionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const query = btn.getAttribute('data-query');
+            sendMessage(query);
+            
+            const suggestionsArea = document.getElementById('chat-suggestions');
+            if (suggestionsArea) {
+                suggestionsArea.style.display = 'none';
+            }
+        });
+    });
+
     // Inicializar cálculo inicial
     calculateTotal();
 });
