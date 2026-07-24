@@ -97,28 +97,49 @@ app.post('/api/chat', async (req, res) => {
     };
 
     // Llamada HTTP usando fetch nativo de Node.js (disponible a partir de Node 18+)
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-3.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-    
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody)
-    });
+    // Intentar con múltiples modelos disponibles en tu cuenta como fallback si hay alta demanda
+    const modelsToTry = ['gemini-3.5-flash', 'gemini-2.0-flash', 'gemini-3.6-flash'];
+    let replyText = null;
+    let success = false;
+    let lastError = null;
 
-    const data = await response.json();
+    for (const model of modelsToTry) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestBody)
+        });
 
-    if (!response.ok) {
-      console.error('Error retornado por la API de Gemini:', data);
-      return res.status(response.status).json({ 
-        error: 'Error al comunicarse con el motor de IA.', 
-        details: data.error ? data.error.message : 'Desconocido'
-      });
+        const data = await response.json();
+
+        if (response.ok) {
+          replyText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (replyText) {
+            success = true;
+            console.log(`Respuesta generada con éxito usando el modelo: ${model}`);
+            break;
+          }
+        } else {
+          console.warn(`El modelo ${model} falló con código ${response.status}:`, data.error?.message);
+          lastError = data.error;
+        }
+      } catch (err) {
+        console.error(`Error de red intentando con el modelo ${model}:`, err);
+        lastError = err;
+      }
     }
 
-    // Extraer el texto de la respuesta generada
-    const replyText = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Lo siento, no pude procesar tu solicitud.';
+    if (!success) {
+      console.error('Todos los modelos de Gemini fallaron o están saturados.');
+      return res.status(503).json({ 
+        error: 'El motor de IA está experimentando alta demanda. Por favor, intenta de nuevo.',
+        details: lastError ? lastError.message : 'Todos los modelos fallaron.'
+      });
+    }
 
     return res.json({ response: replyText });
 
